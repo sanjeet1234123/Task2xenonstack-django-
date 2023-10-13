@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:13
+    container_name: postgresdb
+    environment:
+      POSTGRES_DB: notejam
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  web:
+    image: sanj
+    # command: pip install -r requirements.txt && pip install psycopg2 && python2 manage.py syncdb --noinput && python2 manage.py migrate && python2 manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_ENGINE: 'django.db.backends.postgresql'
+      DB_NAME: 'notejam'
+      DB_USER: 'postgres'
+      DB_PASSWORD: 'postgres'
+      DB_HOST: 'postgresdb'
+      DB_PORT: '5432'
+
+    volumes:
+      - .:/code
+    working_dir: /code
+  
