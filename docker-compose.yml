@@ -8,6 +8,8 @@ services:
       POSTGRES_DB: notejam
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    volumes: 
+      - dbVolume:/var/lib/postgresql/data
 
   web:
     image: sanj
@@ -26,4 +28,7 @@ services:
 
     volumes:
       - .:/code
+    working_dir: /code
   
+volumes:
+    dbVolume:
